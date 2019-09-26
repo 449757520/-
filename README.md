@@ -16,7 +16,7 @@ npm dev
 # 打包构建
 npm build
 
-# 指定平台的开发时构建(微信、百度、头条、支付宝)
+# 指定平台的开发时构建
 npm dev:wx
 npm dev:swan
 npm dev:tt
@@ -31,8 +31,5 @@ npm build:my
 # 生成 bundle 分析报告
 npm run build --report
 ```
+## mpvue+van-weapp+axios
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-=======
-# -
-mpvue+van-weapp+axios
