@@ -1,0 +1,27 @@
+.leftPanel{
+  margin: 40rpx 30rpx;
+}
+.videoPanel{
+  text-align: center;
+  margin: 40rpx 30rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;/**开始**/
+  align-items: center;/**交叉轴**/
+  padding-top: 30rpx ;
+  border-bottom: 2rpx solid #D4D4D4;
+  padding-bottom: 60rpx;
+}
+.tablePanel {
+  /*height: 414rpx;*/
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap:wrap;  /**换行**/
+  /*background-color: #f1f1f1;*/
+  margin-top: 20rpx;
+  border-radius: 5rpx;
+  padding-bottom: 20rpx;
+  margin-bottom: 20rpx;
+}

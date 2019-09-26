@@ -1,0 +1,22 @@
+.userMessagePanel{
+  background-color: #FFBC1A;
+  width: 100%;
+}
+.tablePanel {
+  /*height: 414rpx;*/
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap:wrap;  /**换行**/
+  background-color: #f1f1f1;
+  margin-top: 20rpx;
+  border-radius: 5rpx;
+  padding-bottom: 20rpx;
+  margin-bottom: 20rpx;
+}
+.tablePanelContent{
+  width: 100%;
+  background-color: #f1f1f1;
+  margin-bottom: 100rpx;
+}

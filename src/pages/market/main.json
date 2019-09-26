@@ -1,0 +1,16 @@
+{
+  "navigationBarTitleText": "车源信息",
+  "usingComponents": {
+    "van-row": "../../static/vant/row/index",
+    "van-col": "../../static/vant/col/index",
+    "van-tab": "../../static/vant/tab/index",
+    "van-tabs": "../../static/vant/tabs/index",
+    "van-popup": "../../static/vant/popup/index",
+    "van-cell": "../../static/vant/cell/index",
+    "van-cell-group": "../../static/vant/cell-group/index",
+    "van-field": "../../static/vant/field/index",
+    "van-loading": "../../static/vant/loading/index",
+    "van-toast": "../../static/vant/toast/index"
+  },
+  "backgroundTextStyle":"dark"
+}

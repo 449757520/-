@@ -1,0 +1,13 @@
+.tablePanel {
+  height: 414rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap:wrap;  /**换行**/
+  background-color: #f1f1f1;
+}
+.tablePanelContent{
+  width: 100%;
+  background-color: #f1f1f1;
+}

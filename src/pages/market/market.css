@@ -1,0 +1,53 @@
+.content{
+  border-radius: 10px;
+  border: 1px solid #f1f1f1;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+}
+.topContent{
+  padding: 8px;
+  overflow: hidden;
+}
+.bottomContent{
+  padding: 15rpx;
+  /*position: absolute;*/
+  text-align: right;
+  display:flex;  /*盒子模型*/
+  flex-direction: row;  /*横向*/
+  justify-content:flex-end;
+  align-items: center; /*纵轴居中*/
+}
+.bottomContentCar{
+  padding-top: 20rpx;
+  padding-bottom: 18rpx;
+  padding-right: 15rpx;
+  display:flex;  /*盒子模型*/
+  flex-direction: row;  /*横向*/
+  justify-content:space-between ;
+  align-items: center; /*纵轴居中*/
+}
+.slide-image{
+  height: 100%;
+  width: 100%;
+}
+.otherBrand{
+  display: flex;
+  justify-content:space-between;
+  flex-direction: row;
+  align-items:center;
+  padding-left: 4%;
+  padding-right: 4%;
+  padding-bottom: 2%;
+  border-bottom: 1rpx solid #afafaf;
+}
+.bottomContentCar button{
+  margin-left: 15rpx !important;
+  max-height: 40rpx !important;
+  /*padding-top: 1rpx !important;*/
+  /*padding-bottom: 1rpx !important;*/
+  /*text-align: t !important;*/
+  padding-left: 10rpx !important;
+  padding-right: 10rpx !important;
+  line-height: 40rpx;
+  vertical-align:bottom;
+}
