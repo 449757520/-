@@ -222,6 +222,9 @@
           return store.state.baseUrl
         }
       },
+      onLoad(){
+        this.getSessionKeyExpire();
+      },
       mounted(){
         Toast.loading({
           mask: true,
@@ -318,6 +321,25 @@
         //切换tabs
         onTabsChange(event){
           this.index = event.mp.detail.index;
+        },
+        //查看session_key失效性
+        getSessionKeyExpire(){
+          console.log("页面加载");
+          wx.checkSession({
+            success(){
+              //未过期
+              console.log("未过期");
+              const marketUrl = '/pages/market/main';
+              wx.navigateTo({url:"/pages/market/main"});
+              console.log("111111");
+            },
+            fail(){
+              //重新登录
+              console.log("已过期");
+              const loginUrl = "/pages/login/main";
+              wx.navigateTo({url:loginUrl});
+            }
+          })
         }
       },
       onPullDownRefresh() {

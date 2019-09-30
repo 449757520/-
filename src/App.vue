@@ -26,6 +26,26 @@ export default {
   },
   log () {
     console.log(`log at:${Date.now()}`)
+  },
+  onLaunch(){
+    this.getSessionKeyExpire();
+  },
+  methods:{
+    //查看session_key失效性
+    getSessionKeyExpire(){
+      console.log("onLunch");
+      wx.checkSession({
+        success(){
+          console.log("未过期");
+          const loginUrl = "/pages/market/main";
+          wx.switchTab({url:loginUrl});
+        },
+        fail(){
+          //重新登录
+          console.log("已过期");
+        }
+      })
+    }
   }
 }
 </script>

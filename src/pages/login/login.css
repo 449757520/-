@@ -28,3 +28,29 @@
   margin: 70rpx 50rpx;
   font-size: 30rpx;
 }
+
+
+.imageHeader {
+  width: 100rpx;
+  height: 92rpx;
+  text-align: center;
+  /*background-color: #FFBC1A;*/
+  border-radius: 50%;
+  border: 2rpx solid #FFBC1A;
+  padding-top: 8rpx;
+  margin-left: 45%;
+}
+.imageHeader image {
+  width: 80rpx;
+  height: 80rpx;
+}
+.imageButton{
+  padding: 0px;
+  line-height:0px;
+  border:0px;
+  background-color:transparent;
+  border: 0px;
+}
+.imageButton::after{
+  border: 0px;
+}

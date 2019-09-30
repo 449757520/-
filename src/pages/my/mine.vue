@@ -4,8 +4,8 @@
     <van-row>
       <div class="userMessagePanel">
         <div style="padding: 30px;min-height:150rpx;overflow: hidden">
-          <div style="width: 150rpx;height: 133rpx;background-color:#E9E9EA;float: left;text-align: center;padding-top:17rpx;border-radius: 75rpx;">
-            <img style="width: 100rpx;height: 100rpx" src="../../../static/images/picture.png"/>
+          <div class="imgClass">
+            <img style="max-width: 130rpx;max-height: 130rpx" :src="logoImage"/>
           </div>
           <div style="float: left;margin-left: 50rpx;padding-top: 15rpx">
             <span>{{username}}</span><span>（{{role}}账号）</span>
@@ -54,6 +54,7 @@
       name: "mine",
       data(){
         return{
+          logoImage:'',
           imageLogos:[
             {id:'1',carName:'价格显示',img:''},
             {id:'1',carName:'订单管理',img:''},
@@ -77,11 +78,10 @@
         }
       },
       mounted(){
-        console.log("用户数据");
-        console.log(wx.getStorageSync("user").id);
         this.username = wx.getStorageSync("user").username;
         this.role = wx.getStorageSync("user").role == 1 ? '业务员' : '经销商';
         this.account = wx.getStorageSync("user").account;
+        this.logoImage = wx.getStorageSync("userDetail").userInfo.avatarUrl;
       }
     }
 </script>
@@ -100,4 +100,15 @@
 /*.van-icon{*/
   /*font-size: 50rpx !important;*/
 /*}*/
+  .imgClass{
+    width: 130rpx;
+    height: 130rpx;
+    float: left;
+    text-align: center;
+  }
+  .imgClass img{
+    border-radius: 75rpx;
+    -moz-border-radius: 75px;
+    -webkit-border-radius: 75px;
+  }
 </style>

@@ -67,6 +67,9 @@
       }
       this.showAllBrands();
     },
+    onLoad(){
+      this.getSessionKeyExpire();
+    },
     methods:{
       showAllBrands(){
         this.show = true;
@@ -74,6 +77,34 @@
           this.url+this.allBrandsUrl
         ).then(response=>{
           this.imageButtonArrays = response.data;
+        })
+      },
+      //校验session_key
+      getSessionKeyExpire(){
+        wx.checkSession({
+          success(){
+            //登录成功
+            console.log("未过期");
+          },
+          fail(){
+            //登录失败
+            console.log("过期");
+            //重新登录
+            wx.login({
+              success(response){
+                console.log(response);
+                if(response.code){
+                  //请求第三方接口
+                  wx.request({
+                    url:'http://192.168.195.1:8080/car/server/api/app' + '/code',
+                    data:{code:response.code}
+                  })
+                } else {
+                  console.log('登录失败'+response.errMsg);
+                }
+              }
+            });
+          }
         })
       },
     }

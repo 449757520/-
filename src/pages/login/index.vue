@@ -29,9 +29,14 @@
             @focus="focusInfoPassword"
           />
         </div>
-        <div style="margin: 120rpx 35rpx;text-align: center">
+        <div style="margin: 120rpx 0rpx 130rpx 0;text-align: center">
           <van-button round color="#FFBC1A" @click="loginInfo">登录</van-button>
         </div>
+        <view class='imageHeader'>
+          <button class="imageButton" open-type="getUserInfo" lang="zh_CN" @getuserinfo="bindGetUserInfo">
+          <image src='../../static/images/wx.png'></image>
+          </button>
+        </view>
       </view>
     </van-row>
     <van-toast id="van-toast" />
@@ -56,48 +61,62 @@
           loginInfoUrl:'',
         }
     },
-    created(){
-      //判断用户是否授权
-      // wx.getSetting({
-      //   success(res) {
-      //     if (!res.authSetting['scope.record']) {
-      //       wx.authorize({
-      //         scope: 'scope.userInfo',
-      //         success () {
-      //           console.log("已授权");
-      //           const url = '../market/main';//车源页面
-      //           wx.switchTab({url});
-      //         },
-      //         fail (){
-      //           console.log("授权失败");
-      //         }
-      //       })
-      //     }
-      //   }
-      // })
-    },
     computed:{
       url(){
         return store.state.baseUrl
       }
     },
+    onLoad(){
+      this.getSessionKeyExpire();
+    },
     methods:{
+      //查看session_key失效性
+      getSessionKeyExpire(){
+        console.log("onLoad");
+        wx.checkSession({
+          success(){},
+          fail(){
+            //已过期
+            console.log("已过期");
+            //重新登录
+            wx.login({
+              success(response){
+                if(response.code){
+                  //请求第三方接口
+                  wx.request({
+                    url:'http://192.168.195.1:8080/car/server/api/app' + '/code',
+                    data:{code:response.code}
+                  })
+                } else {
+                  console.log('登录失败'+response.errMsg);
+                }
+              }
+            });
+          }
+        })
+      },
+      //授权按钮
       bindGetUserInfo(e){
         if (e.mp.detail.userInfo){
-          const url = '../market/main';//车源页面
-          wx.switchTab({url});
-          // let { encryptedData,userInfo,iv } = e.mp.detail;
-          // axios.post(this.api,{
-          //   // 这里的code就是通过wx.login()获取的
-          //   //code:self.code,
-          //   //encryptedData,
-          //   //iv,
-          // }).then(res => {
-          //   console.log(`后台交互拿回数据:`,res);
-          //   // 获取到后台重写的session数据，可以通过vuex做本地保存
-          // }).catch(err => {
-          //   console.log(`api请求出错:`,err);
-          // })
+          let userDetail = {
+             encryptedData:e.mp.detail.encryptedData,
+             userInfo:e.mp.detail.userInfo,
+             iv:e.mp.detail.iv
+          };
+          wx.setStorageSync("userDetail",userDetail);//用户详细信息
+          wx.login({
+            success(response){
+              if(response.code){
+                //请求第三方接口
+                wx.request({
+                  url:'http://192.168.195.1:8080/car/server/api/app' + '/code',
+                  data:{code:response.code}
+                })
+              } else {
+                console.log('登录失败'+response.errMsg);
+              }
+            }
+          });
         } else {
           //用户按了拒绝按钮
           console.log('用户按了拒绝按钮');
@@ -106,31 +125,46 @@
       //登录
       loginInfo(){
         let that = this;
-        if(that.telephone == ''){
-          that.telephoneError = true;
-          return false;
-        }
-        if(that.password == ''){
-          that.passwordError = true;
-          return false;
-        }
-        var user = {
-          username:'admin',
-          account:that.telephone
-        };
-        axios.post(
-          that.url + that.loginInfoUrl,
-          user
-        ).then(response=>{
-          if(response.data.code == 200) {
-            //用户信息存储到本地缓存
-            wx.setStorageSync("user",response.data.data);//用户
-            //跳转页面
-            const url = '../market/main';
-            wx.switchTab({url: url})
-          } else if(response.data.code == 206) {
-            Toast.fail('用户名或密码错误');
-            return false;
+        wx.getSetting({
+           success(res) {
+            if (!res.authSetting['scope.record']) {
+                wx.authorize({
+                scope: 'scope.userInfo',
+                success () {
+                  if(that.telephone == ''){
+                    that.telephoneError = true;
+                    return false;
+                  }
+                  if(that.password == ''){
+                    that.passwordError = true;
+                    return false;
+                  }
+                  var user = {
+                    username:'admin',
+                    account:that.telephone
+                  };
+                  axios.post(
+                    that.url + that.loginInfoUrl,
+                    user
+                  ).then(response=>{
+                    if(response.data.code == 200) {
+                      Toast.clear();
+                      //用户信息存储到本地缓存
+                      wx.setStorageSync("user",response.data.data);//用户
+                      //跳转页面
+                      const url = '../market/main';
+                      wx.switchTab({url: url})
+                    } else if(response.data.code == 206) {
+                      Toast.fail('用户名或密码错误');
+                    }
+                  })
+                },
+                fail (){
+                  console.log("未授权");
+                  Toast.fail('请先授权小程序');
+                }
+              })
+            }
           }
         })
       },
@@ -165,7 +199,7 @@
     top:0px;
     bottom: 0px;
     width: 100%;
-    padding-top: 450rpx;
+    padding-top: 420rpx;
     background-image: url("http://hbimg.huabanimg.com/8d210c31f9a0c7ed0c15e3a1c92e83425314b52119b7bf-HjpZds_fw658");
     /*background-position-x: center;*/
     background-size: cover;
@@ -174,7 +208,7 @@
     border-bottom: 0rpx !important;
   }
   .van-button--normal{
-    padding: 0rpx 300rpx !important;
+    padding: 0rpx 302rpx !important;
   }
   .van-icon{
     margin-right: 10rpx !important;
